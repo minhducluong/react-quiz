@@ -1,12 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux'
+
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import rootReducer from './reducers'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = configureStore({
+  reducer: rootReducer
+})
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+document.addEventListener('keyup', function(event) {
+  if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+    store.dispatch({ type: 'next' })
+  }
+})
+
+document.addEventListener('keyup', function(event) {
+  if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+    store.dispatch({ type: 'prev' })
+  }
+});	
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);

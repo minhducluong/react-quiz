@@ -1,3 +1,5 @@
+Using Redux, Redux Toolkit, React Router, react-document-title
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
