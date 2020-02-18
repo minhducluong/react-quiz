@@ -27,7 +27,6 @@ const Quiz = ({ question, current }) => {
         {question.options.map((option, index) =>
           <Option
             key={index}
-            question={question}
             option={option}
             chosen={question.chosen}
             index={index} />
