@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import DocumentTitle from 'react-document-title'
 
 export default function Reward() {
+  const [show, setShow] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(false)
+    }, 8000)
+  }, [])
+  
   return (
     <DocumentTitle title="Congratulations!">
       <>
@@ -13,7 +21,7 @@ export default function Reward() {
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen></iframe>
 
-        <div className="congrat">CHÚC MỪNG BẠN <br />ĐÃ TRẢ LỜI ĐÚNG HẾT CÁC CÂU HỎI</div>
+        {show && <div className="congrat">CHÚC MỪNG BẠN <br />ĐÃ TRẢ LỜI ĐÚNG HẾT CÁC CÂU HỎI</div>}
       </>
     </DocumentTitle>
   )
