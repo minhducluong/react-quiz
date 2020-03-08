@@ -1,13 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { answered, total } from '../selectors'
+import { useSelector } from 'react-redux'
+import { answeredSelector, totalSelector } from '../selectors'
 
-const mapStateToProps = state => ({
-  answered: answered(state),
-  total: total(state)
-})
+export default function Progress(){
+  const answered = useSelector(answeredSelector)
+  const total = useSelector(totalSelector)
 
-const Progress = ({ answered, total }) => {
   const progress = answered / total * 100
   let klass = 'progress'
   if (progress === 100) klass += ' done'
@@ -18,7 +16,3 @@ const Progress = ({ answered, total }) => {
   ></div>
   )
 }
-
-export default connect(
-  mapStateToProps
-)(Progress)

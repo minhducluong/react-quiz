@@ -1,19 +1,19 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { next, prev } from '../reducers'
+import { useDispatch, useSelector } from 'react-redux'
+import { next, prev } from '../reducers/currentSlice'
+import { totalSelector } from '../selectors/index'
 
-const mapDispatchToProps = { next, prev }
-
-const Navigation = ({ direction, next, prev }) => {
+export default function Navigation ({ direction }) {
+  const questionsLength = useSelector(totalSelector)
+  const dispatch = useDispatch()
   return <i 
     className={'fas fa-chevron-' + direction}
-    onClick={ () => direction === 'down' ? next() : prev() }
+    onClick={ () => 
+      direction === 'down' 
+      ? dispatch(next(questionsLength)) 
+      : dispatch(prev(questionsLength)) 
+    }
   />
 }
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Navigation)
 
 

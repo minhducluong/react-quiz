@@ -1,41 +1,25 @@
-import { createSelector } from '@reduxjs/toolkit'
+export const answeredSelector = state => state.questions.reduce((total, question) =>
+  question.chosen || question.chosen === 0
+    ? total + 1
+    : total
+  , 0)
 
-const questions = state => state.questions
+export const pointSelector = state => state.questions.reduce((point, question) =>
+  question.chosen === question.key
+    ? point + 1
+    : point
+  , 0)
 
-export const answered = createSelector(
-  questions,
-  questions => questions.reduce((total, question) =>
-    question.chosen || question.chosen === 0
-      ? total + 1
-      : total
-    , 0)
-)
+export const totalSelector = state => state.questions.length
 
-export const point = createSelector(
-  questions,
-  questions => questions.reduce((point, question) =>
-    question.chosen === question.key
-      ? point + 1
-      : point
-    , 0)
-)
+export const falseAnswersSelector = state => {
+  const falseAnswers = []
 
-export const total = createSelector(
-  questions,
-  questions => questions.length
-)
+  state.questions.forEach((question, index) => {
+    if (question.chosen !== question.key) {
+      falseAnswers.push(index + 1)
+    }
+  })
 
-export const falseAnswers = createSelector(
-  questions,
-  questions => {
-    const falseAnswers = []
-
-    questions.forEach((question, index) => {
-      if (question.chosen !== question.key) {
-        falseAnswers.push(index + 1)
-      }
-    })
-
-    return falseAnswers
-  }
-)
+  return falseAnswers
+}

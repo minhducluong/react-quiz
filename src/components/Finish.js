@@ -1,16 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom";
-import { answered, point, total, falseAnswers} from '../selectors'
+import { answeredSelector, pointSelector, totalSelector, falseAnswersSelector} from '../selectors'
 
-const mapStateToProps = state => ({
-  answered: answered(state),
-  point: point(state),
-  total: total(state),
-  falseAnswers: falseAnswers(state)
-})
+export default function Finish () {
+  const answered = useSelector(answeredSelector)
+  const point = useSelector(pointSelector)
+  const total = useSelector(totalSelector)
+  const falseAnswers = useSelector(falseAnswersSelector)
 
-const Finish = ({ answered, point, total, falseAnswers }) => {
   let history = useHistory()
 
   const handleFinish = () => {
@@ -39,8 +37,4 @@ const Finish = ({ answered, point, total, falseAnswers }) => {
   </div>
   )
 }
-
-export default connect(
-  mapStateToProps
-)(Finish)
 

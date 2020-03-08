@@ -1,34 +1,21 @@
 import React from 'react'
-import { createSelector } from '@reduxjs/toolkit'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import Option from './Option'
 import Progress from './Progress'
 
-const questions = state => state.questions
-const current = state => state.current
-
-const currentQuestion = createSelector(
-  questions,
-  current,
-  (questions, current) => questions[current]
-)
-
-const mapStateToProps = state => ({
-  question: currentQuestion(state),
-  current: current(state)
-})
-
-const Quiz = ({ question, current }) => {
+export default function Quiz() {
+  const current = useSelector(state => state.current)
+  const currentQuestion = useSelector(state => state.questions[state.current])
   return (
     <div className="wrapper">
-      <div className="question">{current + 1}. {question.question}</div>
+      <div className="question">{current + 1}. {currentQuestion.question}</div>
       <div className="option_wrap">
-        {question.options.map((option, index) =>
+        {currentQuestion.options.map((option, index) =>
           <Option
             key={index}
             option={option}
-            chosen={question.chosen}
+            chosen={currentQuestion.chosen}
             index={index} />
         )}
       </div>
@@ -36,7 +23,3 @@ const Quiz = ({ question, current }) => {
     </div>
   )
 }
-
-export default connect(
-  mapStateToProps
-)(Quiz)

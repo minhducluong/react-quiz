@@ -6,22 +6,11 @@ import { Provider } from 'react-redux'
 import './index.css';
 import App from './App';
 import rootReducer from './reducers'
+import { prev, next } from './reducers/currentSlice'
 
 const store = configureStore({
   reducer: rootReducer
 })
-
-document.addEventListener('keyup', function(event) {
-  if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-    store.dispatch({ type: 'next' })
-  }
-})
-
-document.addEventListener('keyup', function(event) {
-  if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-    store.dispatch({ type: 'prev' })
-  }
-});	
 
 ReactDOM.render(
   <Provider store={store}>
@@ -29,3 +18,18 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+// Use keyboard to next or prev question
+const questionsLength = store.getState().questions.length
+
+document.addEventListener('keyup', function(event) {
+  if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+    store.dispatch(next(questionsLength))
+  }
+})
+
+document.addEventListener('keyup', function(event) {
+  if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+    store.dispatch(prev(questionsLength))
+  }
+});	
